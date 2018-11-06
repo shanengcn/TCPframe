@@ -1,6 +1,6 @@
 import socket
 import os
-def main():
+def client():
     tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     ADDR=("127.0.0.1",8000)
     tcp_socket.connect(ADDR)
@@ -33,4 +33,4 @@ def main():
     tcp_socket.close()
 
 if __name__ == "__main__":
-    main()
+    client()
