@@ -14,7 +14,7 @@ def server():
             try:
                 fileinfo=conn.recv(4096)
                 flag,filename,filesize=str(fileinfo,'utf8').split('|')
-                path = os.path.join(BASE_DIR,'server_recevie',filename)
+                path = os.path.join(BASE_DIR,'server_receive',filename)
                 filesize=int(filesize)
                 f=open(path,'wb')
                 sentsize=0
