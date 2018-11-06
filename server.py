@@ -13,21 +13,30 @@ def server():
         while 1:
             try:
                 fileinfo=conn.recv(4096)
-                flag,filename,filesize=str(fileinfo,'utf8').split('|')
-                path = os.path.join(BASE_DIR,'server_receive',filename)
-                filesize=int(filesize)
-                f=open(path,'wb')
-                sentsize=0
-                while sentsize!=filesize:
-                    data=conn.recv(4096)
-                    f.write(data)
-                    sentsize+=len(data)
-                print('file received: ',filename)
-                #此处加入对音频的处理
-                #
-                #得到识别结果
-                res='server get!'
-                conn.sendall(bytes(res,'utf8'))
+                s=str(fileinfo,'utf8')
+                if s[0:4]=='post':
+                    flag,filename,filesize=str(fileinfo,'utf8').split('|')
+                    path = os.path.join(BASE_DIR,'server_receive',filename)
+                    filesize=int(filesize)
+                    f=open(path,'wb')
+                    sentsize=0
+                    while sentsize!=filesize:
+                        data=conn.recv(4096)
+                        f.write(data)
+                        sentsize+=len(data)
+                    print('file received: ',filename)
+                    #此处加入对语音识别/关键词识别
+                    #
+                    #得到识别结果传给res
+                    res='server get!'
+                    conn.sendall(bytes(res,'utf8'))
+                else:
+                    print('string received: ',s)
+                    #此处加入对data的处理
+                    #
+                    #得到识别结果
+                    res='string get!'
+                    conn.sendall(bytes(res,'utf8'))
             except:
                 break
         break
